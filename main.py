@@ -12,22 +12,27 @@ running = True
 import menu
 
 while running:
-    variables.set_res(variables.screen_width + 1, variables.screen_height + 1)
+    # Test if surfaces resize correctly by constantly increasing screen size
+    # variables.set_res(variables.screen_width + 1, variables.screen_height + 1)
+
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif variables.scene == "menu":
+            menu.on_event(event)
 
     # fill the screen with a color to wipe away anything from last frame
-    variables.screen.fill("blue")
+    variables.screen.fill("SteelBlue")
 
     # RENDER YOUR GAME HERE
-    menu.draw()
+    if variables.scene == "menu":
+        menu.draw()
 
     # flip() the display to put your work on screen
     pygame.display.flip()
 
-    clock.tick(variables.fps)  # limits FPS to 60
+    clock.tick(variables.fps)  # limits FPS
 
 pygame.quit()

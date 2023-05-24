@@ -8,7 +8,9 @@ screen_height = 0
 screen: pygame.surface.Surface
 fullscreen = False
 fps = 60
+scene = "menu"
 
+# Set the resolution of the screen
 def set_res(width, height):
     global screen_width, screen_height
     screen_width = width
@@ -16,6 +18,7 @@ def set_res(width, height):
     menu.set_elements()
     return pygame.display.set_mode((width, height))
 
+# Toggle fullscreen mode
 def toggle_fullscreen():
     global fullscreen
     fullscreen = not fullscreen

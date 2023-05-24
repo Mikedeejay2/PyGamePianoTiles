@@ -1,8 +1,8 @@
 import pygame
 import variables
 
-title_surf = None
-title_rect = None
+title_surf: pygame.surface.Surface
+title_rect: pygame.rect.Rect
 
 
 def set_elements():

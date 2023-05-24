@@ -1,11 +1,11 @@
 import pygame
 import menu
 
-screen_width = None
-screen_height = None
 monitor_width = pygame.display.Info().current_w
 monitor_height = pygame.display.Info().current_h
-screen = None
+screen_width = 0
+screen_height = 0
+screen: pygame.surface.Surface
 fullscreen = False
 fps = 60
 

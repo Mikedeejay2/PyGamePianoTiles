@@ -25,6 +25,6 @@ def animate_underline(rect, total_frames, color, width):
         if underline_current_frame < total_frames:
             underline_current_frame += 1
         
-        pygame.draw.line(variables.screen, color, start_pos, cur_pos, int(width))
+        pygame.draw.line(variables.screen, color, start_pos, cur_pos, width)
     else:
         underline_current_frame = 0

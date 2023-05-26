@@ -48,7 +48,7 @@ def draw_animation():
     elif credits_rect.collidepoint(mouse_pos):
         rect = credits_rect
     
-    utils.animate_underline(rect, animation_frames, text_color, variables.screen_width / 500)
+    utils.animate_underline(rect, animation_frames, text_color, variables.screen_width // 500)
 
 # On an event, check for a click
 def on_event(event):

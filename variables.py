@@ -9,6 +9,12 @@ screen: pygame.surface.Surface
 fullscreen = False
 fps = 60
 scene = "menu"
+word_list = []
+
+# Load word list from a file
+with open("wordlist.txt", "r") as file:
+    for line in file:
+        word_list.append(line.strip())
 
 # Set the resolution of the screen
 def set_res(width, height):

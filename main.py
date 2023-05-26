@@ -10,6 +10,7 @@ clock = pygame.time.Clock()
 running = True
 
 import menu
+import game
 
 while running:
     # Test if surfaces resize correctly by constantly increasing screen size
@@ -22,6 +23,8 @@ while running:
             running = False
         elif variables.scene == "menu":
             menu.on_event(event)
+        elif variables.scene == "game":
+            game.on_event(event)
 
     # fill the screen with a color to wipe away anything from last frame
     variables.screen.fill("SteelBlue")
@@ -29,6 +32,8 @@ while running:
     # RENDER YOUR GAME HERE
     if variables.scene == "menu":
         menu.draw()
+    elif variables.scene == "game":
+        game.draw()
 
     # flip() the display to put your work on screen
     pygame.display.flip()

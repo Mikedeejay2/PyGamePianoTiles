@@ -15,6 +15,8 @@ missed = 0
 word_speed = 1
 word_frequency = 150
 game_over = False
+game_over_display_time = 180
+game_over_cur_time = 0
 
 # Set lane positions
 lane_count = 4
@@ -45,7 +47,7 @@ active_words.append(word)
 word_added_time = pygame.time.get_ticks()
 
 def on_event(event):
-    global game_over
+    global game_over, score, missed
     if event.type == pygame.QUIT:
             game_over = True
     elif event.type == pygame.KEYDOWN:
@@ -70,12 +72,8 @@ def on_event(event):
             else:
                 missed += 1
 
-def draw():
-    global word_speed, score, missed
-    if game_over:
-        score = 0
-        missed = 0
-        word_speed = 1
+def draw_game():
+    global word_speed, score, missed, game_over, word_added_time
 
     # Update word positions
     for word in active_words:
@@ -119,15 +117,24 @@ def draw():
                 game_over = True
                 break
 
-if game_over:
+def draw_game_over():
+    global word_speed, score, missed, game_over, word_added_time, game_over_cur_time
     # Game over screen
     game_over_surface = font.render("Game Over", True, word_color)
     final_score_surface = font.render(f"Final Score: {score}", True, word_color)
     variables.screen.blit(game_over_surface, (variables.screen_width // 2 - game_over_surface.get_width() // 2, variables.screen_height // 2 - font_size))
     variables.screen.blit(final_score_surface, (variables.screen_width // 2 - final_score_surface.get_width() // 2, variables.screen_height // 2 + font_size))
-    pygame.display.flip()
+    game_over_cur_time += 1
 
-    # Wait for a while before closing the window
-    pygame.time.wait(3000)
+    if game_over_cur_time >= game_over_display_time:
+        variables.scene = "menu"
+        score = 0
+        missed = 0
+        word_speed = 1
+        game_over = False
 
-    variables.scene = "menu"
+def draw():
+    if game_over:
+        draw_game_over()
+    else:
+        draw_game()

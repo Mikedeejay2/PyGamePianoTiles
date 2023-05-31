@@ -5,10 +5,12 @@ import variables
 
 word_color = "white"
 missed_color = "red"
+note_color = "cadetblue3"
+note_outline_color = "cadetblue2"
 
 # Set fonts
-font_size = 32
-font = pygame.font.Font(None, font_size)
+font_size = 0
+font = None
 
 score = 0
 missed = 0
@@ -20,31 +22,36 @@ game_over_cur_time = 0
 
 # Set lane positions
 lane_count = 4
-lane_width = variables.screen_width // lane_count
-lanes = [i * lane_width + lane_width // 2 for i in range(lane_count)]
+lane_width = 0
+lanes = None
+new_word_count = 0
+note_length = 0
+
+# Create initial word
+active_words = []
+
+# Add the first word
+word_added_time = pygame.time.get_ticks()
+
+def set_elements():
+    global lane_width, lanes, new_word_count, note_length, font_size, font
+    font_size = variables.screen_width // 25
+    font = pygame.font.Font(None, font_size)
+    note_length = variables.screen_height // 2
+    lane_width = variables.screen_width // lane_count
+    lanes = [i * lane_width for i in range(lane_count)]
+    new_word_count = variables.screen_height // word_frequency
 
 # Function to create a new word
 def new_word():
     word = random.choice(variables.word_list)
     lane = random.choice(lanes)
-    x = lane - font_size // 2
-    y = -font_size
-    return {"text": word, "x": x, "y": y, "lane": lane}
+    rect = pygame.rect.Rect(lane, -note_length, variables.screen_width // lane_count, note_length)
+    return {"text": word, "rect": rect}
 
 # Function to check if two words overlap
 def check_overlap(word1, word2):
-    rect1 = pygame.Rect(word1["x"], word1["y"], font_size * len(word1["text"]), font_size)
-    rect2 = pygame.Rect(word2["x"], word2["y"], font_size * len(word2["text"]), font_size)
-    return rect1.colliderect(rect2)
-
-# Create initial word
-active_words = []
-new_word_count = variables.screen_height // word_frequency
-
-# Add the first word
-word = new_word()
-active_words.append(word)
-word_added_time = pygame.time.get_ticks()
+    return word1["rect"].colliderect(word2["rect"])
 
 def on_event(event):
     global game_over, score, missed
@@ -58,7 +65,8 @@ def on_event(event):
             closest_word = None
             closest_distance = sys.maxsize
             for word in active_words:
-                distance = abs(variables.screen_height - (word["y"] + font_size))
+                rect = word["rect"]
+                distance = abs(variables.screen_height - (rect.y + font_size))
                 if distance < closest_distance:
                     closest_word = word
                     closest_distance = distance
@@ -77,7 +85,7 @@ def draw_game():
 
     # Update word positions
     for word in active_words:
-        word["y"] += word_speed
+        word["rect"].y += word_speed
 
     # Create new words
     time_since_word_added = pygame.time.get_ticks() - word_added_time
@@ -96,8 +104,16 @@ def draw_game():
 
     # Draw active words
     for word in active_words:
+        rect = word["rect"]
+        pygame.draw.rect(variables.screen, note_color, rect, 0, 10)
+        if word == active_words[0]:
+            pygame.draw.rect(variables.screen, word_color, rect, 10, 10)
+        else:
+            pygame.draw.rect(variables.screen, note_outline_color, rect, 10, 10)
         word_surface = font.render(word["text"], True, word_color)
-        variables.screen.blit(word_surface, (word["x"], word["y"]))
+        word_x = rect.x + (rect.width - word_surface.get_width()) // 2
+        word_y = rect.y + (rect.height - word_surface.get_height()) // 2
+        variables.screen.blit(word_surface, (word_x, word_y))
 
     # Draw score and missed counts
     score_surface = font.render(f"Score: {score}", True, word_color)
@@ -110,7 +126,8 @@ def draw_game():
 
     # Check if any words reached the bottom
     for word in active_words:
-        if word["y"] >= variables.screen_height:
+        rect = word["rect"]
+        if rect.y >= variables.screen_height:
             active_words.remove(word)
             missed += 1
             if missed >= 3:
@@ -132,6 +149,7 @@ def draw_game_over():
         missed = 0
         word_speed = 1
         game_over = False
+        active_words.append(new_word())
 
 def draw():
     if game_over:

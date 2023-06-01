@@ -1,6 +1,7 @@
 import pygame
 import menu
 import game
+import settings
 
 monitor_width = pygame.display.Info().current_w
 monitor_height = pygame.display.Info().current_h
@@ -11,6 +12,21 @@ fullscreen = False
 fps = 60
 scene = "menu"
 word_list = []
+
+supported_resolutions = (
+    (640, 360),
+    (800, 600),
+    (1024, 768),
+    (1280, 720),
+    (1366, 768),
+    (1536, 864),
+    (1600, 900),
+    (1600, 1200),
+    (1920, 1080),
+    (2048, 1152),
+    (2560, 1440),
+    (3840, 2160)
+)
 
 # Load word list from a file
 with open("wordlist.txt", "r") as file:
@@ -24,6 +40,7 @@ def set_res(width, height):
     screen_height = height
     menu.set_elements()
     game.set_elements()
+    settings.set_elements()
     return pygame.display.set_mode((width, height))
 
 # Toggle fullscreen mode

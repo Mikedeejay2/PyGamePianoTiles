@@ -93,14 +93,17 @@ def draw_game():
         word = new_word()
 
         # Check for overlap with existing words
-        while any(check_overlap(word, active_word) for active_word in active_words):
-            word = new_word()
-
-        active_words.append(word)
-        word_added_time = pygame.time.get_ticks()
+        place = True
+        for active_word in active_words:
+            if check_overlap(active_word, word):
+                place = False
+        
+        if place:
+            active_words.append(word)
+            word_added_time = pygame.time.get_ticks()
 
     # Increase word speed as the game progresses
-    word_speed = 1 + score // 10
+    word_speed = 1 + score / 10
 
     # Draw active words
     for word in active_words:
@@ -120,9 +123,6 @@ def draw_game():
     missed_surface = font.render(f"Missed: {missed}", True, missed_color)
     variables.screen.blit(score_surface, (10, 10))
     variables.screen.blit(missed_surface, (variables.screen_width - missed_surface.get_width() - 10, 10))
-
-    # Update the display
-    pygame.display.flip()
 
     # Check if any words reached the bottom
     for word in active_words:
@@ -149,6 +149,7 @@ def draw_game_over():
         missed = 0
         word_speed = 1
         game_over = False
+        active_words.clear()
         active_words.append(new_word())
 
 def draw():

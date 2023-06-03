@@ -555,7 +555,6 @@ give
 memory
 performance
 social
-q
 august
 quote
 language
@@ -575,7 +574,6 @@ few
 east
 paper
 single
-ii
 age
 activities
 club
@@ -583,7 +581,6 @@ example
 girls
 additional
 password
-z
 latest
 something
 road

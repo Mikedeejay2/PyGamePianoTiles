@@ -8,9 +8,11 @@ animation_frames = 15
 # Set elements of the menu. Called when the screen is created / resized
 def set_elements():
     global title_surf, title_rect
-    # TODO: Replace with image
-    title_surf = pygame.surface.Surface((variables.screen_width / 2, variables.screen_height / 6))
-    title_surf.fill("white")
+    title_surf = pygame.image.load("img/Logo.png").convert_alpha()
+    title_surf = pygame.transform.scale(title_surf, (
+        title_surf.get_width() * (variables.screen_width / 2000),
+        title_surf.get_height() * (variables.screen_width / 2000)
+        ))  
     title_rect = utils.get_rect(title_surf, 50, 20)
 
     global text_font

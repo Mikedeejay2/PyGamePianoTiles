@@ -103,7 +103,7 @@ def draw_game():
             word_added_time = pygame.time.get_ticks()
 
     # Increase word speed as the game progresses
-    word_speed = 1 + score / 10
+    word_speed = 1 + score // 10
 
     # Draw active words
     for word in active_words:

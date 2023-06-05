@@ -38,10 +38,11 @@ def set_res(width, height):
     global screen_width, screen_height
     screen_width = width
     screen_height = height
+    result = pygame.display.set_mode((width, height))
     menu.set_elements()
     game.set_elements()
     settings.set_elements()
-    return pygame.display.set_mode((width, height))
+    return result
 
 # Toggle fullscreen mode
 def toggle_fullscreen():

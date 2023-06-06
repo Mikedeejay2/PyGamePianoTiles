@@ -1,6 +1,7 @@
 import pygame
 import variables
 import utils
+import background
 
 text_color = "white"
 animation_frames = 15
@@ -16,8 +17,7 @@ def set_elements():
     title_rect = utils.get_rect(title_surf, 50, 20)
 
     global text_font
-    # TODO: Add Font file
-    text_font = pygame.font.Font(None, int(variables.screen_width / 20))
+    text_font = pygame.font.Font("fonts/Montserrat-Regular.ttf", int(variables.screen_width / 20))
 
     global settings_surf, settings_rect
     settings_surf = text_font.render("Settings", True, text_color)
@@ -28,11 +28,12 @@ def set_elements():
     play_rect = utils.get_rect(play_surf, 50, 60)
 
     global credits_surf, credits_rect
-    credits_surf = text_font.render("Credits", True, text_color)
+    credits_surf = text_font.render("How to Play", True, text_color)
     credits_rect = utils.get_rect(credits_surf, 50, 75)
 
 # Draw the menu to the screen
 def draw():
+    background.draw()
     variables.screen.blit(title_surf, title_rect)
     variables.screen.blit(settings_surf, settings_rect)
     variables.screen.blit(play_surf, play_rect)
@@ -63,5 +64,5 @@ def on_event(event):
             print("Clicked Play")
             variables.scene = "game"
         elif credits_rect.collidepoint(mouse_pos):
-            print("Clicked Credits")
-            variables.scene = "credits"
+            print("Clicked How to Play")
+            variables.scene = "howtoplay"

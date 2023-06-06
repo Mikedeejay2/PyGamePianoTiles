@@ -12,6 +12,7 @@ running = True
 import menu
 import game
 import settings
+import how_to_play
 
 while running:
     # Test if surfaces resize correctly by constantly increasing screen size
@@ -28,6 +29,8 @@ while running:
             game.on_event(event)
         elif variables.scene == "settings":
             settings.on_event(event)
+        elif variables.scene == "howtoplay":
+            how_to_play.on_event(event)
 
     # fill the screen with a color to wipe away anything from last frame
     variables.screen.fill("SteelBlue")
@@ -39,6 +42,8 @@ while running:
         game.draw()
     elif variables.scene == "settings":
         settings.draw()
+    elif variables.scene == "howtoplay":
+        how_to_play.draw()
 
     # flip() the display to put your work on screen
     pygame.display.flip()

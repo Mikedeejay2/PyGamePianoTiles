@@ -1,6 +1,7 @@
 import variables
 import pygame
 import utils
+import background
 
 text_color = "white"
 title_font = None
@@ -22,8 +23,8 @@ resolution_index = 3 # 1280, 720
 
 def set_elements():
     global title_font, setting_font, title_surf, title_rect, settings, back_surf, back_rect
-    title_font = pygame.font.Font(None, variables.screen_width // 15)
-    setting_font = pygame.font.Font(None, variables.screen_width // 30)
+    title_font = pygame.font.Font("fonts/Montserrat-Bold.ttf", variables.screen_width // 15)
+    setting_font = pygame.font.Font("fonts/Montserrat-Regular.ttf", variables.screen_width // 30)
     title_surf = title_font.render("Settings", True, text_color)
     title_rect = utils.get_rect(title_surf, 20, 10)
     
@@ -36,6 +37,7 @@ def set_elements():
     fullscreen_rect = pygame.rect.Rect(padding, variables.screen_height * 0.5, variables.screen_width - padding * 2, variables.screen_height * 0.2)
 
 def draw():
+    background.draw()
     variables.screen.blit(title_surf, title_rect)
     mouse_pos = pygame.mouse.get_pos()
 

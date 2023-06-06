@@ -2,6 +2,8 @@ import pygame
 import menu
 import game
 import settings
+import background
+import how_to_play
 
 monitor_width = pygame.display.Info().current_w
 monitor_height = pygame.display.Info().current_h
@@ -42,6 +44,8 @@ def set_res(width, height):
     menu.set_elements()
     game.set_elements()
     settings.set_elements()
+    background.set_elements()
+    how_to_play.set_elements()
     return result
 
 # Toggle fullscreen mode

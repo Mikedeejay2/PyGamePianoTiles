@@ -95,21 +95,11 @@ def draw_game():
     # Create new words
     time_since_word_added = pygame.time.get_ticks() - word_added_time
     if len(active_words) < new_word_count and time_since_word_added > time_until_next_word or len(active_words) == 0:  # Pause of 1 second
-        word = new_word()
-
-        # Check for overlap with existing words
-        place = True
-        for active_word in active_words:
-            if check_overlap(active_word, word):
-                place = False
-        
-        if place:
-            active_words.append(word)
-            word_added_time = pygame.time.get_ticks()
+        try_place_new_word()
 
     # Increase word speed as the game progresses
-    word_speed = (1 + score / 50) * (variables.screen_height / 720)
-    time_until_next_word = (2000 - score * 50) * (variables.screen_height // 720)
+    word_speed = (1.2 + math.sqrt(score) / 5) * (variables.screen_height / 720)
+    time_until_next_word = (2000 - math.sqrt(score) * 200) * (variables.screen_height / 720)
 
     outline_size = variables.screen_width // 200
     # Draw active words
@@ -175,3 +165,17 @@ def draw():
         draw_game_over()
     else:
         draw_game()
+
+def try_place_new_word():
+    global word_added_time
+    word = new_word()
+
+    # Check for overlap with existing words
+    place = True
+    for active_word in active_words:
+        if check_overlap(active_word, word):
+            place = False
+    
+    if place:
+        active_words.append(word)
+        word_added_time = pygame.time.get_ticks()

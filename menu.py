@@ -17,7 +17,7 @@ def set_elements():
     title_rect = utils.get_rect(title_surf, 50, 20)
 
     global text_font
-    text_font = pygame.font.Font("fonts/Montserrat-Regular.ttf", int(variables.screen_width / 20))
+    text_font = pygame.font.Font("fonts/Montserrat-Bold.ttf", int(variables.screen_width / 20))
 
     global settings_surf, settings_rect
     settings_surf = text_font.render("Settings", True, text_color)

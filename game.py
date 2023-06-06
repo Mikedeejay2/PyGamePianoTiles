@@ -109,8 +109,9 @@ def draw_game():
         pygame.draw.rect(variables.screen, note_color, rect, 0, outline_size)
         word_surface = None
         if word == active_words[0]:
-            pygame.draw.rect(variables.screen, word_color, rect, outline_size, outline_size)
-            word_surface = font_selected.render(word["text"], True, word_color)
+            cur_color = (max((rect.y - variables.screen_height / 3) / variables.screen_height * 300, 0), 0, 0)
+            pygame.draw.rect(variables.screen, cur_color, rect, outline_size, outline_size)
+            word_surface = font_selected.render(word["text"], True, cur_color)
         else:
             pygame.draw.rect(variables.screen, note_outline_color, rect, outline_size, outline_size)
             word_surface = font_unselected.render(word["text"], True, word_color)

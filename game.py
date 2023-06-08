@@ -94,7 +94,7 @@ def draw_game():
 
     # Create new words
     time_since_word_added = pygame.time.get_ticks() - word_added_time
-    if len(active_words) < new_word_count and time_since_word_added > time_until_next_word or len(active_words) == 0:  # Pause of 1 second
+    if (len(active_words) < new_word_count and time_since_word_added > time_until_next_word) or len(active_words) == 0:  # Pause of 1 second
         try_place_new_word()
 
     # Increase word speed as the game progresses
